@@ -14,6 +14,13 @@ namespace TodoApp.Controllers
             return View(MyDb.Lista); 
         }
 
+        [HttpGet] //only at GET will be here routed
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost] //only the POST will be here routed
         public ActionResult Create(string Todo)
         {
             if(!string.IsNullOrEmpty(Todo))
