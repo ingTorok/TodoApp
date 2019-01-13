@@ -9,16 +9,17 @@ namespace TodoApp.Controllers
 {
     public class TodoController : Controller
     {
+        private List<TodoItem> lista = new List<TodoItem>
+         {
+            new TodoItem() { Name = "Só", Done = true },
+            new TodoItem() { Name = "Cukor", Done = true },
+            new TodoItem() { Name = "Spagetti", Done = true },
+            new TodoItem() { Name = "Marhahús", Done = false },
+            new TodoItem() { Name = "Paradicsom", Done = false }
+         };
+
         public ActionResult Index()
-        {
-            var lista = new List<TodoItem>();
-
-            lista.Add(new TodoItem() { Name = "Só", Done = true });
-            lista.Add(new TodoItem() { Name = "Cukor", Done = true });
-            lista.Add(new TodoItem() { Name = "Spagetti", Done = true });
-            lista.Add(new TodoItem() { Name = "Marhahús", Done = false });
-            lista.Add(new TodoItem() { Name = "Paradicsom", Done = false });
-
+        {           
             return View(lista); 
         }
 
@@ -27,6 +28,9 @@ namespace TodoApp.Controllers
             if(!string.IsNullOrEmpty(Todo))
             {//if there is data
                 //save data and go back to Index
+
+                lista.Add(new TodoItem() { Name = Todo, Done = true });
+
                 return RedirectToAction("Index");
             }
             
