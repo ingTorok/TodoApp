@@ -1,0 +1,25 @@
+﻿@model List<TodoApp.Models.TodoItem>
+@{
+    ViewBag.Title = "TodoList";
+}
+
+<h2>Bevásárlólista</h2>
+
+<ol>
+    @foreach (var todoItem in Model)
+    {
+        if (todoItem.Done)
+        {
+            <li><strike>@todoItem.Name</strike></li>
+        }
+        else
+        {
+            <li>@todoItem.Name</li>
+        }
+    }
+    <li></li>
+</ol>
+
+@*The two solutioans are equal*@
+<a href="/Todo/Create">Új felvitel</a>
+@Html.ActionLink("Új felvitele","Create")
