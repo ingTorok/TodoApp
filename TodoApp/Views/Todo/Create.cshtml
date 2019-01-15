@@ -6,8 +6,11 @@
 <h2>Create</h2>
 
 <form method="post">
-    <input name="Todo"/>
-    <input type="submit" value="Save"/>
+    <input name="todo" >
+    @*<input name="isDone" type="checkbox" />*@
+
+    @Html.CheckBox("isDone")
+    <input type="submit" value="Save" >
     <button>Save</button>
 
 </form>

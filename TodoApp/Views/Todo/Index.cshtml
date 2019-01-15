@@ -5,21 +5,27 @@
 
 <h2>Bevásárlólista</h2>
 
+@*The two solutioans are equal*@
+<a href="/Todo/Create">Create1</a>
+@Html.ActionLink("Create2", "Create")
+
 <ol>
     @foreach (var todoItem in Model)
     {
         if (todoItem.Done)
         {
-            <li><strike>@todoItem.Name</strike></li>
+            <li><strike>@Html.ActionLink(todoItem.Name, "Details", new { id = todoItem.Id })</strike> @Html.ActionLink("Modositas", "Edit", new { id = todoItem.Id }) @Html.ActionLink("Delete", "Delete", new { id = todoItem.Id })</li>
         }
         else
         {
-            <li>@todoItem.Name</li>
+            <li>@Html.ActionLink(todoItem.Name, "Details" , new { id=todoItem.Id }) @Html.ActionLink("Modositas", "Edit", new { id = todoItem.Id }) @Html.ActionLink("Delete", "Delete", new { id = todoItem.Id })</li>
         }
     }
-    <li></li>
 </ol>
 
-@*The two solutioans are equal*@
-<a href="/Todo/Create">Create1</a>
-@Html.ActionLink("Create2","Create")
+@using (Html.BeginForm("Create","Todo"))
+{
+    @Html.TextBox("Name")
+    @Html.CheckBox("isDone")
+    <button>Save</button>
+}
