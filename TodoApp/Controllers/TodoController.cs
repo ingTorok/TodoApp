@@ -10,10 +10,11 @@ namespace TodoApp.Controllers
     public class TodoController : Controller
     {
 
+        Db db = new Db();
 
         public ActionResult Index()
         {           
-            return View(MyDb.Lista); 
+            return View(db.TodoItems.ToList());
         }
 
         [HttpGet] //only at GET will be here routed
@@ -27,9 +28,12 @@ namespace TodoApp.Controllers
         {
             if(!string.IsNullOrEmpty(name))
             {//if there is data
-                //save data and go back to Index
-                var maxId = MyDb.Lista.Max(x => x.Id);
-                MyDb.Lista.Add(new TodoItem() {Id = maxId + 1, Name = name, Done = isDone });
+             //save data and go back to Index
+
+                //var maxId = MyDb.Lista.Max(x => x.Id); 
+                db.TodoItems.Add(new TodoItem() { Name = name, Done = isDone });
+
+                db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
@@ -48,7 +52,7 @@ namespace TodoApp.Controllers
         {
             //MyDb.Lista.Where(x=>x.Id==id); //- this return a list
 
-            var item = MyDb.Lista.Single(x => x.Id == id); // - this return only if exist 1 and not more or less, otherweise will return an exepeption
+            var item = db.TodoItems.Single(x => x.Id == id); // - this return only if exist 1 and not more or less, otherweise will return an exepeption
 
             //var item = MyDb.Lista.SingleOrDefault(x => x.Id == id); // - if there is no id then return null
 
@@ -58,9 +62,11 @@ namespace TodoApp.Controllers
         [HttpPost]
         public ActionResult Edit(int id, string name, bool done)
         {
-            var item = MyDb.Lista.Single(x => x.Id == id);
+            var item = db.TodoItems.Single(x => x.Id == id);
             item.Name = name;
             item.Done = done;
+
+            db.SaveChanges();
 
             return RedirectToAction("Index");
         }
@@ -68,22 +74,24 @@ namespace TodoApp.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            var item = MyDb.Lista.Single(x => x.Id == id);
+            var item = db.TodoItems.Single(x => x.Id == id);
             return View(item);
         }
 
         [HttpPost]
         public ActionResult DeleteConfirmed(int id)
         {
-            var item = MyDb.Lista.Single(x => x.Id == id);
-            MyDb.Lista.Remove(item);
+            var item = db.TodoItems.Single(x => x.Id == id);
+            db.TodoItems.Remove(item);
+
+            db.SaveChanges();
 
             return RedirectToAction("Index");
         }
 
         public ActionResult Details(int id)
         {
-            var item = MyDb.Lista.Single(x => x.Id == id);
+            var item = db.TodoItems.Single(x => x.Id == id);
             return View(item);
         }
 
