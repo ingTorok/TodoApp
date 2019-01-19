@@ -95,5 +95,10 @@ namespace TodoApp.Controllers
             return View(item);
         }
 
+        public ActionResult Teszt()
+        {
+            return View();
+        }
+
     }
 }
